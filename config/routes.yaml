@@ -4,3 +4,7 @@
 #index:
 #    path: /
 #    defaults: { _controller: 'App\Controller\DefaultController::index' }
+
+places:
+    type:     rest
+    resource: App\Controller\PlaceController
