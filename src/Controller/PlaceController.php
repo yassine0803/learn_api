@@ -35,7 +35,7 @@ class PlaceController extends Controller
     // code de getPlacesAction
 
     /**
-     * @Route("/places/{place_id}", name="places_one")
+     * @Route("/places/{place_id}", requirements={"place_id" = "\d+"}, name="places_one")
      * @Method({"GET"})
      */
     public function getPlaceAction(Request $request)
