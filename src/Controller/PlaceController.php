@@ -32,4 +32,25 @@ class PlaceController extends Controller
 
         return new JsonResponse($formatted);
     }
+    // code de getPlacesAction
+
+    /**
+     * @Route("/places/{place_id}", name="places_one")
+     * @Method({"GET"})
+     */
+    public function getPlaceAction(Request $request)
+    {
+        $place = $this->get('doctrine.orm.entity_manager')
+                ->getRepository(Place::class)
+                ->find($request->get('place_id'));
+        /* @var $place Place */
+
+        $formatted = [
+           'id' => $place->getId(),
+           'name' => $place->getName(),
+           'address' => $place->getAddress(),
+        ];
+
+        return new JsonResponse($formatted);
+    }
 }
