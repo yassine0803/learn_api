@@ -11,10 +11,7 @@ use App\Entity\Place;
 
 class PlaceController extends Controller
 {
-    /**
-     * @Route("/places", name="places_list")
-     * @Method({"GET"})
-     */
+
     public function getPlacesAction(Request $request)
     {
         $places = $this->get('doctrine.orm.entity_manager')
@@ -33,17 +30,12 @@ class PlaceController extends Controller
 
         return new JsonResponse($formatted);
     }
-    // code de getPlacesAction
 
-    /**
-     * @Route("/places/{place_id}", requirements={"place_id" = "\d+"}, name="places_one")
-     * @Method({"GET"})
-     */
-    public function getPlaceAction(Request $request)
+    public function getPlaceAction($id, Request $request)
     {
         $place = $this->get('doctrine.orm.entity_manager')
                 ->getRepository(Place::class)
-                ->find($request->get('place_id'));
+                ->find($id);
         /* @var $place Place */
         if (empty($place)) {
             return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
