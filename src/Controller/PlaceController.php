@@ -5,6 +5,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Place;
 
@@ -44,7 +45,9 @@ class PlaceController extends Controller
                 ->getRepository(Place::class)
                 ->find($request->get('place_id'));
         /* @var $place Place */
-
+        if (empty($place)) {
+            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+        }
         $formatted = [
            'id' => $place->getId(),
            'name' => $place->getName(),
