@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -18,11 +19,13 @@ class Place
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $address;
 

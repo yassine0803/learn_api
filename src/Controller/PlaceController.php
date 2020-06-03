@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les anno
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\View; // Utilisation de la vue de FOSRestBundle
 use App\Entity\Place;
+use App\Form\PlaceType;
 
 class PlaceController extends Controller
 {
@@ -57,13 +58,17 @@ class PlaceController extends Controller
     public function postPlacesAction(Request $request)
     {
         $place = new Place();
-        $place->setName($request->get('name'));
-        $place->setAddress($request->get('address'));
+        $form = $this->createForm(PlaceType::class, $place);
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        $em->persist($place);
-        $em->flush();
+        $form->submit($request->request->all()); // Validation des données
 
-        return $place;
+        if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($place);
+            $em->flush();
+            return $place;
+        } else {
+            return $form;
+        }
     }
 }
