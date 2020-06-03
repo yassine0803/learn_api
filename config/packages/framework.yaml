@@ -13,3 +13,7 @@ framework:
     #fragments: true
     php_errors:
         log: true
+fos_rest:
+    view:
+        view_response_listener:
+            enabled: true

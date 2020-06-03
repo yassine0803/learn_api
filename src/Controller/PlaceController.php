@@ -6,12 +6,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 use FOS\RestBundle\View\ViewHandler;
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\View\View; // Utilisation de la vue de FOSRestBundle
 use App\Entity\Place;
 
 class PlaceController extends Controller
@@ -27,25 +27,13 @@ class PlaceController extends Controller
                 ->getRepository(Place::class)
                 ->findAll();
         /* @var $places Place[] */
-
-        $formatted = [];
-        foreach ($places as $place) {
-            $formatted[] = [
-               'id' => $place->getId(),
-               'name' => $place->getName(),
-               'address' => $place->getAddress(),
-            ];
-        }
-
-         // Récupération du view handler
-        $viewHandler = $this->get('fos_rest.view_handler');
+        
 
         // Création d'une vue FOSRestBundle
-        $view = View::create($formatted);
+        $view = View::create($places);
         $view->setFormat('json');
 
-        // Gestion de la réponse
-        return $viewHandler->handle($view);
+        return $view;
     }
     
 

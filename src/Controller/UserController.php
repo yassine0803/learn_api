@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\View\View;
 use App\Entity\User;
 
 class UserController extends Controller
@@ -33,7 +34,15 @@ class UserController extends Controller
             ];
         }
 
-        return new JsonResponse($formatted);
+        // Récupération du view handler
+        $viewHandler = $this->get('fos_rest.view_handler');
+
+        // Création d'une vue FOSRestBundle
+        $view = View::create($formatted);
+        $view->setFormat('json');
+
+        // Gestion de la réponse
+        return $viewHandler->handle($view);
     }
 
     /**
