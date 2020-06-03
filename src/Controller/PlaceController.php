@@ -88,14 +88,6 @@ class PlaceController extends Controller
         }
     }
 
-    /**
-     * @Rest\View()
-     * @Rest\Put("/places/{id}")
-     */
-    public function updatePlaceAction(Request $request)
-    {
-        return $this->updatePlace($request, true);
-    }
 
     /**
      * @Rest\View()
