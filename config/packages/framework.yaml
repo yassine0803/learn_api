@@ -14,6 +14,10 @@ framework:
     php_errors:
         log: true
 fos_rest:
+    routing_loader:
+        include_format: false
     view:
-        view_response_listener:
-            enabled: true
+        view_response_listener: true
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['json'], fallback_format: 'json' }

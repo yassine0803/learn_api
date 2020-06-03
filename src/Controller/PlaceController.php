@@ -27,13 +27,8 @@ class PlaceController extends Controller
                 ->getRepository(Place::class)
                 ->findAll();
         /* @var $places Place[] */
-        
 
-        // Création d'une vue FOSRestBundle
-        $view = View::create($places);
-        $view->setFormat('json');
-
-        return $view;
+        return $places;
     }
     
 
