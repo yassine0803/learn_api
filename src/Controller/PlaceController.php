@@ -49,4 +49,21 @@ class PlaceController extends Controller
 
         return $place;
     }
+
+    /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/places")
+     */
+    public function postPlacesAction(Request $request)
+    {
+        $place = new Place();
+        $place->setName($request->get('name'));
+        $place->setAddress($request->get('address'));
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->persist($place);
+        $em->flush();
+
+        return $place;
+    }
 }
