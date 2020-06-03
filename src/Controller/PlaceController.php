@@ -32,24 +32,21 @@ class PlaceController extends Controller
     }
     
 
-    /**
-     * @Get("/places/{id}")
+     /**
+     * @Rest\View()
+     * @Rest\Get("/places/{id}")
      */
-    public function getPlaceAction($id, Request $request)
+    public function getPlaceAction(Request $request)
     {
         $place = $this->get('doctrine.orm.entity_manager')
-            ->getRepository(Place::class)
-            ->find($id);
+                ->getRepository(Place::class)
+                ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire
         /* @var $place Place */
+
         if (empty($place)) {
             return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
         }
-        $formatted = [
-            'id' => $place->getId(),
-            'name' => $place->getName(),
-            'address' => $place->getAddress(),
-        ];
 
-        return new JsonResponse($formatted);
+        return $place;
     }
 }
