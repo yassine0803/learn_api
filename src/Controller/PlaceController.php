@@ -25,23 +25,23 @@ class PlaceController extends Controller
     public function getPlacesAction(Request $request)
     {
         $places = $this->get('doctrine.orm.entity_manager')
-                ->getRepository(Place::class)
-                ->findAll();
+            ->getRepository(Place::class)
+            ->findAll();
         /* @var $places Place[] */
 
         return $places;
     }
-    
 
-     /**
+
+    /**
      * @Rest\View()
      * @Rest\Get("/places/{id}")
      */
     public function getPlaceAction(Request $request)
     {
         $place = $this->get('doctrine.orm.entity_manager')
-                ->getRepository(Place::class)
-                ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire
+            ->getRepository(Place::class)
+            ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire
         /* @var $place Place */
 
         if (empty($place)) {
@@ -69,6 +69,22 @@ class PlaceController extends Controller
             return $place;
         } else {
             return $form;
+        }
+    }
+
+    /**
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\Delete("/places/{id}")
+     */
+    public function removePlaceAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $place = $em->getRepository(Place::class)
+            ->find($request->get('id'));
+        /* @var $place Place */
+        if ($place) {
+            $em->remove($place);
+            $em->flush();
         }
     }
 }
