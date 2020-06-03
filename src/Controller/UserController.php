@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest; 
 use App\Entity\User;
+use App\Form\UserType;
 
 class UserController extends Controller
 {
@@ -18,7 +19,7 @@ class UserController extends Controller
      */
     public function getUsersAction(Request $request)
     {
-        $users = $this->get('doctrine.orm.entity_manager')
+        $users = $this->getDoctrine()->getManager()
                 ->getRepository(User::class)
                 ->findAll();
         /* @var $users Place[] */
@@ -42,5 +43,26 @@ class UserController extends Controller
         }
 
         return $user;
+    }
+
+    /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/users")
+     */
+    public function postUsersAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($user);
+            $em->flush();
+            return $user;
+        } else {
+            return $form;
+        }
     }
 }
