@@ -106,7 +106,7 @@ class PlaceController extends Controller
         /* @var $place Place */
 
         if (empty($place)) {
-            return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+            return \FOS\RestBundle\View\View::create(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
         }
 
         $form = $this->createForm(PlaceType::class, $place);
