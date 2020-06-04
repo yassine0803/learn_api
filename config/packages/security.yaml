@@ -23,6 +23,6 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
 # Ajout d'un encoder pour notre entité USer
     encoders:
-        AppBundle\Entity\User:
+        App\Entity\User:
             algorithm: bcrypt
             cost: 12

@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="users",
  *  uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})})
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -50,8 +50,7 @@ class User
      * @Assert\NotBlank(groups={"FullUpdate","New"})
      * @Assert\Length(
      *      min = 4,
-     *      max = 50,
-     *      allowEmptyString = false
+     *      max = 50
      * )
      */
     protected $plainPassword;
@@ -128,6 +127,18 @@ class User
     {
         // Suppression des données sensibles
         $this->plainPassword = null;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
  
 }
