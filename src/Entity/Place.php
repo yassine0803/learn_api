@@ -35,6 +35,7 @@ class Place
 
     /**
      * @ORM\OneToMany(targetEntity="Price", mappedBy="place")
+     * @Assert\Valid
      * @var Price[]
      */
     protected $prices;
