@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\View; // Utilisation de la vue de FOSRestBundle
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use App\Entity\Place;
 use App\Form\PlaceType;
 
@@ -21,6 +22,8 @@ class PlaceController extends Controller
     /**
      * @Rest\View(serializerGroups={"price"})
      * @Rest\Get("/places")
+     * @QueryParam(name="offset", requirements="\d+", default="", description="Index de début de la pagination")
+     * @QueryParam(name="limit", requirements="\d+", default="", description="Index de fin de la pagination")
      */
     public function getPlacesAction(Request $request)
     {
