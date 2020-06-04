@@ -15,6 +15,7 @@ use FOS\RestBundle\View\View; // Utilisation de la vue de FOSRestBundle
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use App\Entity\Place;
 use App\Form\PlaceType;
+use FOS\RestBundle\Request\ParamFetcher;
 
 class PlaceController extends Controller
 {
@@ -25,12 +26,24 @@ class PlaceController extends Controller
      * @QueryParam(name="offset", requirements="\d+", default="", description="Index de début de la pagination")
      * @QueryParam(name="limit", requirements="\d+", default="", description="Index de fin de la pagination")
      */
-    public function getPlacesAction(Request $request)
+    public function getPlacesAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $places = $this->get('doctrine.orm.entity_manager')
-            ->getRepository(Place::class)
-            ->findAll();
-        /* @var $places Place[] */
+        $offset = $paramFetcher->get('offset');
+        $limit = $paramFetcher->get('limit');
+
+        $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
+        $qb->select('p')
+           ->from(Place::class, 'p');
+
+        if ($offset != "") {
+            $qb->setFirstResult($offset);
+        }
+
+        if ($limit != "") {
+            $qb->setMaxResults($limit);
+        }
+
+        $places = $qb->getQuery()->getResult();
 
         return $places;
     }
