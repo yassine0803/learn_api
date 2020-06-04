@@ -19,7 +19,7 @@ class PlaceController extends Controller
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"price"})
      * @Rest\Get("/places")
      */
     public function getPlacesAction(Request $request)
@@ -80,12 +80,18 @@ class PlaceController extends Controller
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $place = $em->getRepository(Place::class)
-            ->find($request->get('id'));
+                    ->find($request->get('id'));
         /* @var $place Place */
-        if ($place) {
-            $em->remove($place);
-            $em->flush();
+
+        if (!$place) {
+            return;
         }
+
+        foreach ($place->getPrices() as $price) {
+            $em->remove($price);
+        }
+        $em->remove($place);
+        $em->flush();
     }
 
 

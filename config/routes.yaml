@@ -8,6 +8,9 @@
 places:
     type:     rest
     resource: App\Controller\PlaceController
+prices:
+    type:     rest
+    resource: App\Controller\PriceController
 
 users:
     type:     rest

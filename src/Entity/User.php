@@ -8,7 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="users")
+ * @ORM\Table(name="users",
+ *  uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})})
  */
 class User
 {
@@ -37,6 +38,13 @@ class User
      * @Assert\Email()
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $password;
+
+    protected $plainPassword;
 
     public function getId(): ?int
     {
@@ -75,6 +83,18 @@ class User
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }
