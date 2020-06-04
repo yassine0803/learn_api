@@ -25,11 +25,13 @@ class PlaceController extends Controller
      * @Rest\Get("/places")
      * @QueryParam(name="offset", requirements="\d+", default="", description="Index de début de la pagination")
      * @QueryParam(name="limit", requirements="\d+", default="", description="Index de fin de la pagination")
+     * @QueryParam(name="sort", requirements="(asc|desc)", nullable=true, description="Ordre de tri (basé sur le nom)")
      */
     public function getPlacesAction(Request $request, ParamFetcher $paramFetcher)
     {
         $offset = $paramFetcher->get('offset');
         $limit = $paramFetcher->get('limit');
+        $sort = $paramFetcher->get('sort');
 
         $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
         $qb->select('p')
@@ -42,6 +44,11 @@ class PlaceController extends Controller
         if ($limit != "") {
             $qb->setMaxResults($limit);
         }
+
+        if (in_array($sort, ['asc', 'desc'])) {
+            $qb->orderBy('p.name', $sort);
+        }
+
 
         $places = $qb->getQuery()->getResult();
 
