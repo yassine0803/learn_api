@@ -31,3 +31,23 @@ services:
     get_set_method_normalizer:
         class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
         tags: [serializer.normalizer]
+
+    auth_token_user_provider:
+        class: App\Security\AuthTokenUserProvider
+        arguments: ["@auth_token_repository", "@user_repository"]
+        public:    false
+
+    auth_token_repository:
+        class:   Doctrine\ORM\EntityManager
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ["App:AuthToken"]
+
+    user_repository:
+        class:   Doctrine\ORM\EntityManager
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: ["App:User"]
+
+    auth_token_authenticator:
+        class:     App\Security\AuthTokenAuthenticator
+        arguments: ["@security.http_utils"]
+        public:    false        
