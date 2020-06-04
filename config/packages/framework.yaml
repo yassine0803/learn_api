@@ -13,6 +13,9 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+    serializer:
+        enabled: false
         
 fos_rest:
     routing_loader:
@@ -33,3 +36,5 @@ fos_rest:
             'Symfony\Component\Security\Core\Exception\BadCredentialsException': 401
     param_fetcher_listener:
         enabled: true
+    serializer:
+        serialize_null:  true    

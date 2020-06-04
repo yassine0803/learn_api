@@ -14,7 +14,7 @@ use App\Entity\User;
 class AuthTokenController extends Controller
 {
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"auth-token"})
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/auth-tokens")
      */
     public function postAuthTokensAction(Request $request)

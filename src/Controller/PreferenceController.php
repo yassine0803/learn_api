@@ -15,7 +15,7 @@ class PreferenceController extends Controller
 {
 
     /**
-     * @Rest\View(serializerGroups={"preference"})
+     * @Rest\View()
      * @Rest\Get("/users/{id}/preferences")
      */
     public function getPreferencesAction(Request $request)
@@ -34,7 +34,7 @@ class PreferenceController extends Controller
 
 
      /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"preference"})
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/users/{id}/preferences")
      */
     public function postPreferencesAction(Request $request)

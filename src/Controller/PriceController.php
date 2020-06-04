@@ -9,16 +9,15 @@ use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les anno
 use App\Entity\Price;
 use App\Entity\Place;
 use App\Form\PriceType;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class PriceController extends Controller
 {
 
     /**
-     * @Rest\View(serializerGroups={"price"})
+     * @Rest\View()
      * @Rest\Get("/places/{id}/prices")
      */
-    public function getPricesAction(Request $request, SerializerInterface $serializer)
+    public function getPricesAction(Request $request)
     {
         $place = $this->get('doctrine.orm.entity_manager')
                 ->getRepository(Place::class)
@@ -34,7 +33,7 @@ class PriceController extends Controller
 
 
      /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"price"})
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/places/{id}/prices")
      */
     public function postPricesAction(Request $request)

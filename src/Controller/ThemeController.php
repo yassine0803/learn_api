@@ -35,7 +35,7 @@ class ThemeController extends Controller
 
 
      /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"theme"})
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/places/{id}/themes")
      */
     public function postThemesAction(Request $request)
