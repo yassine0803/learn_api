@@ -14,4 +14,8 @@ prices:
 
 users:
     type:     rest
-    resource: App\Controller\UserController    
+    resource: App\Controller\UserController   
+
+auth-tokens:
+    type:     rest
+    resource: App\Controller\AuthTokenController    

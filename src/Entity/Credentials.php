@@ -1,10 +1,17 @@
 <?php
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Credentials
 {
+    /**
+     * @Assert\NotBlank
+     */
     protected $login;
 
+    /**
+     * @Assert\NotBlank
+     */
     protected $password;
 
     public function getLogin()
