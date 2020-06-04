@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -44,6 +46,14 @@ class User
      */
     protected $password;
 
+    /**
+     * @Assert\NotBlank(groups={"FullUpdate","New"})
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 50,
+     *      allowEmptyString = false
+     * )
+     */
     protected $plainPassword;
 
     public function getId(): ?int
@@ -98,4 +108,26 @@ class User
 
         return $this;
     }
+
+    public function getRoles()
+    {
+        return [];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        // Suppression des données sensibles
+        $this->plainPassword = null;
+    }
+ 
 }

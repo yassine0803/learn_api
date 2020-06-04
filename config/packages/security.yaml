@@ -21,3 +21,8 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+# Ajout d'un encoder pour notre entité USer
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
