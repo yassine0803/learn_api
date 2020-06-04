@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest; 
 use App\Entity\User;
+use App\Entity\Place;
 use App\Form\UserType;
 
 class UserController extends Controller
@@ -60,7 +61,7 @@ class UserController extends Controller
     private function updateUser(Request $request, $clearMissing)
     {
         $user = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:User')
+                ->getRepository(User::class)
                 ->find($request->get('id')); // L'identifiant en tant que paramètre n'est plus nécessaire
         /* @var $user User */
 
@@ -92,6 +93,36 @@ class UserController extends Controller
         } else {
             return $form;
         }
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"place"})
+     * @Rest\Get("/users/{id}/suggestions")
+     */
+    public function getUserSuggestionsAction(Request $request)
+    {
+        $user = $this->get('doctrine.orm.entity_manager')
+                ->getRepository(User::class)
+                ->find($request->get('id'));
+        /* @var $user User */
+
+        if (empty($user)) {
+            return $this->userNotFound();
+        }
+
+        $suggestions = [];
+
+        $places = $this->get('doctrine.orm.entity_manager')
+                ->getRepository(Place::class)
+                ->findAll();
+
+        foreach ($places as $place) {
+            if ($user->preferencesMatch($place->getThemes())) {
+                $suggestions[] = $place;
+            }
+        }
+
+        return $suggestions;
     }
 
     private function userNotFound()

@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use App\Entity\Price;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="places",
@@ -39,9 +39,16 @@ class Place
      */
     protected $prices;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Theme", mappedBy="place")
+     * @var Theme[]
+     */
+    protected $themes;
+
     public function __construct()
     {
         $this->prices = new ArrayCollection();
+        $this->themes = new ArrayCollection();
     }
 
     public function getId()
@@ -102,6 +109,37 @@ class Place
             // set the owning side to null (unless already changed)
             if ($price->getPlace() === $this) {
                 $price->setPlace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Theme[]
+     */
+    public function getThemes(): Collection
+    {
+        return $this->themes;
+    }
+
+    public function addTheme(Theme $theme): self
+    {
+        if (!$this->themes->contains($theme)) {
+            $this->themes[] = $theme;
+            $theme->setPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTheme(Theme $theme): self
+    {
+        if ($this->themes->contains($theme)) {
+            $this->themes->removeElement($theme);
+            // set the owning side to null (unless already changed)
+            if ($theme->getPlace() === $this) {
+                $theme->setPlace(null);
             }
         }
 

@@ -13,6 +13,7 @@ framework:
     #fragments: true
     php_errors:
         log: true
+        
 fos_rest:
     routing_loader:
         include_format: false
@@ -23,4 +24,11 @@ fos_rest:
             - { path: '^/', priorities: ['json'], fallback_format: 'json' }
     body_listener:
         enabled: true
+    exception:
+        enabled: true
+        messages:
+            'Symfony\Component\HttpKernel\Exception\HttpException' : true
+            'Symfony\Component\Security\Core\Exception\BadCredentialsException': true
+        codes:
+            'Symfony\Component\Security\Core\Exception\BadCredentialsException': 401
 

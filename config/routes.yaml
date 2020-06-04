@@ -19,3 +19,11 @@ users:
 auth-tokens:
     type:     rest
     resource: App\Controller\AuthTokenController    
+    
+themes:
+    type:     rest
+    resource: App\Controller\ThemeController
+
+preferences:
+    type:     rest
+    resource: App\Controller\PreferenceController    
