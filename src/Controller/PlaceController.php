@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,16 +17,16 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use App\Entity\Place;
 use App\Form\PlaceType;
 use FOS\RestBundle\Request\ParamFetcher;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 
 class PlaceController extends Controller
 {
 
     /**
      * @ApiDoc(
-     *    description="Récupère la liste des lieux de l'application"
+     *    description="Récupère la liste des lieux de l'application",
+     *    output= { "class"=Place::class, "collection"=true, "groups"={"place"} }
      * )
-     * 
      * @Rest\View()
      * @Rest\Get("/places")
      * @QueryParam(name="offset", requirements="\d+", default="", description="Index de début de la pagination")

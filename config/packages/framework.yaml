@@ -16,6 +16,9 @@ framework:
 
     serializer:
         enabled: false
+    
+    templating:
+        engines: ['twig']
         
 fos_rest:
     routing_loader:
@@ -38,3 +41,4 @@ fos_rest:
         enabled: true
     serializer:
         serialize_null:  true    
+nelmio_api_doc: ~        

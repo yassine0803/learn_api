@@ -30,4 +30,4 @@ preferences:
 
 nelmio-api-doc:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /documentation    
+    prefix:   /documentation

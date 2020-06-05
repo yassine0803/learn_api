@@ -10,6 +10,9 @@ security:
             anonymous: true
             provider: users_in_memory
 
+        doc:
+            pattern: ^/documentation
+            security: false
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -45,3 +48,6 @@ security:
                 authenticator: auth_token_authenticator
             provider: auth_token_user_provider
             anonymous: ~
+        doc:
+            pattern: ^/documentation
+            security: false    
