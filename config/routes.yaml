@@ -27,3 +27,7 @@ themes:
 preferences:
     type:     rest
     resource: App\Controller\PreferenceController    
+
+nelmio-api-doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /documentation    
