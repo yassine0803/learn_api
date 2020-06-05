@@ -16,11 +16,16 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use App\Entity\Place;
 use App\Form\PlaceType;
 use FOS\RestBundle\Request\ParamFetcher;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class PlaceController extends Controller
 {
 
     /**
+     * @ApiDoc(
+     *    description="Récupère la liste des lieux de l'application"
+     * )
+     * 
      * @Rest\View()
      * @Rest\Get("/places")
      * @QueryParam(name="offset", requirements="\d+", default="", description="Index de début de la pagination")
